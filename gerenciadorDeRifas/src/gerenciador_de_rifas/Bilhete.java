@@ -13,16 +13,6 @@ public class Bilhete {
 		this.formaDePagamento = formaDePagamento;
 	}
 	
-	void cadastrarFormaDePagamento(int opcao) {
-		if (opcao == 1) {
-			formaDePagamento = "PIX";
-		} else if (opcao == 2) {
-			formaDePagamento = "Dinheiro";
-		} else {
-			formaDePagamento = "Outro";
-		}
-	}
-	
 	public String toString() {
 		return "Número: " + numero +
 				vendedor.toString() +
