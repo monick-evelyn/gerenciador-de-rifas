@@ -116,7 +116,27 @@ public class Rifa {
 		return lista;
 	}
 
-	//TODO: Listar bilhetes gerais em matriz
+	String listarBilhetesEmMatriz() {
+		int colunas = 10;
+		int linhas = bilhetes.length / colunas;
+		
+		String bilhetesEmMatriz = "==================== VISUALIZAÇÃO GERAL DE BILHETES ====================\n";
+		
+		int controlador = 0;
+		for (int i = 0; i < linhas; i++) {
+			for (int j = 0; j < colunas; j++) {
+				if (bilhetes[controlador] != null) {
+					bilhetesEmMatriz += "   X   ";
+				} else {
+					bilhetesEmMatriz += "   " + (controlador+1) + "   ";
+				}
+				controlador++;
+			}
+			bilhetesEmMatriz += "\n";
+		}
+		bilhetesEmMatriz += "========================================================================\n";
+		return bilhetesEmMatriz;
+	}
 	
 	public String toString() {
 		return "Rifa " +
