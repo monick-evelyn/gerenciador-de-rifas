@@ -102,6 +102,7 @@ public class Rifa {
 				lista += "\n" + bilhetes[i].toString();
 			}
 		}
+		lista += "================================================\n";
 		return lista;
 	}
 	
@@ -113,6 +114,7 @@ public class Rifa {
 				lista += "\nNúmero disponível: " + (i+1);
 				}
 			}
+		lista += "====================================================\n";
 		return lista;
 	}
 
