@@ -70,6 +70,10 @@ public class Rifa {
 		return contadorBilhetesVendidos;
 	}
 	
+	int calcularQtdBilhetesDisponiveis() {
+		return calcularQtdBilhetesDisponiveis() - bilhetes.length;
+	}
+	
 	//TODO: Formatação de retorno double na main
 	double calcularValorArrecadado() {
 		return calcularQtdBilhetesVendidos() * valorPorBilhete;
@@ -89,5 +93,36 @@ public class Rifa {
 		return progressoPorcentagem;
 	}
 	
+	String listarBilhetesVendidos() {
+		String lista = "========== LISTA DE BILHETES VENDIDOS ==========\n"+
+						"Total: " + calcularQtdBilhetesVendidos();
+		
+		for (int i = 0; i < bilhetes.length; i++) {
+			if (bilhetes[i] != null) {
+				lista += "\n" + bilhetes[i].toString();
+			}
+		}
+		return lista;
+	}
 	
+	String listarBilhetesDisponiveis() {
+		String lista = "========== LISTA DE BILHETES DISPONÍVEIS ==========\n"+
+				"Total: " + calcularQtdBilhetesDisponiveis();
+		for (int i = 0; i < bilhetes.length; i++) {
+			if (bilhetes[i] == null) {
+				lista += "\nNúmero disponível: " + (i+1);
+				}
+			}
+		return lista;
+	}
+
+	//TODO: Listar bilhetes gerais em matriz
+	
+	public String toString() {
+		return "Rifa " +
+				"\nPrêmio: " + premio + 
+				"\nValor por bilhete: " + valorPorBilhete + 
+				"\nTotal de bilhetes vendidos: " + totalBilhetes +
+				"\nMeta de arrecadação: " + metaArrecadacao;
+	}
 }
