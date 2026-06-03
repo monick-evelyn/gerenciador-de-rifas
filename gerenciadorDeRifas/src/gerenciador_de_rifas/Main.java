@@ -11,8 +11,12 @@ public class Main {
 		System.out.println("| 1 - Criar Rifa                               |");
 		System.out.println("| 2 - Cadastrar vendedor                       |");
 		System.out.println("| 3 - Realizar venda                           |");
-		System.out.println("| 4 - Mostrar relatório                        |");
-		System.out.println("| 5 - Mostrar rifa                             |");
+		System.out.println("| 4 - Buscar Vendedor por nome                 |");
+		System.out.println("| 5 - Buscar Comprador por nome                |");
+		System.out.println("| 6 - Mostrar relatório                        |");
+		System.out.println("| 7 - Mostrar Ranking de vendedores            |");
+		System.out.println("| 8 - Listar vendas por vendedor               |");
+		System.out.println("| 9 - Sortear um número da rifa                |");
 		System.out.println("| 0 - Para sair                                |");		
 		return lerInteiro("| Digite a opção desejada:                     |");
 	}
@@ -29,14 +33,36 @@ public class Main {
 		
 	}
 	
+	static void opcaoBuscarVendedorPorNome() {
+		
+	}
+	
+	static void opcaoBuscarCompradorPorNome() {
+		
+	}
+	
 	static void opcaoMostrarRelatorio() {
 		
 	}
 	
-	static String opcaoMostrarRifa() {
-		return "Em processo...";
+	
+	//static String opcaoMostrarRifa() {
+		//return "Em processo...";
+		
+	//}
+	
+	static void opcaoRankingDeVendedores() {
 		
 	}
+	
+	static void opcaoListarVendasPorVendedor() {
+		
+	}
+	
+	static void opcaoSortearNumeroRifa() {
+		
+	}
+	
 	
 	static String lerTexto(String mensagem) {
 			System.out.print(mensagem);
@@ -81,13 +107,29 @@ public class Main {
 					break;
 				
 				case 4:
-					opcaoMostrarRelatorio();
+					opcaoBuscarVendedorPorNome();
 					break;
 					
 				case 5:
-					opcaoMostrarRifa();
+					opcaoBuscarCompradorPorNome();
+					break;
+				
+				case 6:
+					opcaoMostrarRelatorio();
+					break;
+				
+				case 7:
+					opcaoRankingDeVendedores();
 					break;
 					
+				case 8:
+					opcaoListarVendasPorVendedor();
+					break;
+					
+				case 9:
+					opcaoSortearNumeroRifa();
+					break;
+				
 				case 0:
 					System.out.println("Saindo do sistema...");
 					break;
