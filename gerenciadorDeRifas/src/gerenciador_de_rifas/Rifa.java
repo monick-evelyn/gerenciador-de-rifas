@@ -61,15 +61,32 @@ public class Rifa {
 	}
 	
 	int calcularQtdBilhetesVendidos() {
-		
+		int contadorBilhetesVendidos = 0;
+		for (int i = 0; i < bilhetes.length; i++) {
+			if (bilhetes[i] != null) {
+				contadorBilhetesVendidos++;
+			}
+		}
+		return contadorBilhetesVendidos;
 	}
 	
+	//TODO: Formatação de retorno double na main
 	double calcularValorArrecadado() {
-	
+		return calcularQtdBilhetesVendidos() * valorPorBilhete;
 	}
 	
-	double calcularProgressoDeMeta() {
+	double calcularProgressoEmPorcentagem() {
+		double progressoPorcentagem = (100 * calcularValorArrecadado())/metaArrecadacao;
+		return progressoPorcentagem;
+	}
 	
+	double calcularRestanteEmPorcentagem() {
+		if (calcularProgressoEmPorcentagem() >= 100) {
+			return 0.0;
+		}
+		double valorRestante = metaArrecadacao - calcularValorArrecadado() ;
+		double progressoPorcentagem = (100 * valorRestante)/metaArrecadacao;
+		return progressoPorcentagem;
 	}
 	
 	
