@@ -16,15 +16,48 @@ public class Rifa {
 	}
 	
 	boolean verificarNumeroDisponivel(int numero) {
-		
+		//TODO: Verificar se numero existe no sistemaRifa
+		for (int i = 0; i < bilhetes.length; i++) {
+			if ((i+1) == numero) {
+				if (bilhetes[i] == null) {
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;
 	}
 	
 	String cadastrarFormaDePagamento(int opcao) {
-		
+		switch (opcao) {
+		case 1:
+			return "PIX";
+		case 2:
+			return "Dinheiro";
+		case 3:
+			return "Outro";
+		default:
+			return "";
+		}
 	}
 	
 	String venderBilhete(int numero, Comprador comprador, Vendedor vendedor, String formaDePagamento) {
-		
+		//TODO: Verificar se esse método pode ser dividido em mais funções
+		for (int i = 0; i < bilhetes.length; i++) {
+			if ((i+1) == numero) {
+				if (verificarNumeroDisponivel(numero)) {
+					Bilhete bilhete = new Bilhete (numero, comprador, vendedor, formaDePagamento);
+					bilhetes[i] = bilhete;
+					vendedor.qtdNumerosVendidos++;
+					totalBilhetes++;
+					
+					return "Bilhete vendido com sucesso!";
+				}
+				return "Bilhete com o número " + numero + " não está disponível.";
+			}
+			return "Bilhete com o número " + numero + " não encontrado.";
+		}
+		return "Não foi possível vender o bilhete";
 	}
 	
 	int calcularQtdBilhetesVendidos() {
