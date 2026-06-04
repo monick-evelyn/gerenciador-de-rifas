@@ -73,91 +73,20 @@ public class Main {
 	}
 	
 	static void opcaoMostrarRelatorio(SistemaRifa sistema) {
-		System.out.println("==================== RELATÓRIO GERAL ====================");
-		
-		System.out.println("\nPROGRESSO: ==============================================");
-		System.out.println("Meta de arrecadação: R$ %.2f%n" + sistema.rifa.metaArrecadacao);
-		System.out.println("Valor Arrecadado:    R$ %.2f%n" + sistema.rifa.calcularValorArrecadado());
-		
-		System.out.println("\nBilhetes vendidos: " + sistema.rifa.calcularQtdBilhetesVendidos());
-		System.out.println("Bilhetes disponíveis: " + sistema.rifa.calcularQtdBilhetesDisponiveis());
-		
-		System.out.println("\nProgresso: %.1f%%%n" + sistema.rifa.calcularProgressoEmPorcentagem());
-		System.out.println("Restante para meta: %.1f%%%n" + sistema.rifa.calcularRestanteEmPorcentagem());
-		
-		System.out.println("\nEQUIPE: =================================================");
-		System.out.println("Total de Vendedores: " + sistema.totalVendedores);
-		
-		System.out.println("\nVISUALIZAÇÃO GERAL: ======================================");
-		System.out.println(sistema.rifa.listarBilhetesEmMatriz());
-		
-		System.out.println("=========================================================");
+		sistema.listarRelatorioGeral();
 		
 	}
 	
 	//TODO: Testar o ranking
 	static void opcaoRankingDeVendedores(SistemaRifa sistema) {
-		Vendedor vendedores[] = sistema.vendedores;
-		Vendedor vendedoresOrdenado[] = new Vendedor[sistema.totalVendedores];
-		
-		for (int i = 0; i < sistema.totalVendedores; i++) {
-			vendedoresOrdenado[i] = vendedores[i];
-		}
-		
-		for (int i = 0; i < vendedoresOrdenado.length - 1; i++) {
-			
-			for (int j = 0; j < vendedoresOrdenado.length - 1 - i; j++) {
-				
-				if (vendedoresOrdenado[j].qtdNumerosVendidos < vendedoresOrdenado[j+1].qtdNumerosVendidos) {
-					Vendedor vendedorAux = vendedoresOrdenado[j];
-					vendedoresOrdenado[j] = vendedoresOrdenado[j+1];
-					vendedoresOrdenado[j+1] = vendedorAux;
-				}
-			}
-		}
-		
-		System.out.println("==================== RANKING DE VENDEDORES ====================");
-		for (int i = 0; i < vendedoresOrdenado.length; i++) {
-			System.out.println((i+1) + "º Lugar: " + vendedoresOrdenado[i].nome + " | Bilhetes vendidos: " + vendedoresOrdenado[i].qtdNumerosVendidos);
-		}
-		System.out.println("===============================================================");
+		sistema.carregarRankingDeVendedores();
 	}
 	
 	static void opcaoListarVendasPorVendedor(SistemaRifa sistema) {
 		lerTexto("Digite o nome do Vendedor: ");
 		String nomeVendedor=leitor.nextLine();
 
-		Vendedor vendedor = opcaoBuscarVendedorPorNome(sistema);
-		
-		if (vendedor == null) {
-			System.out.println("Erro: Vendedor " + nomeVendedor + " não encontado");
-		}
-		
-		String lista = "\n========== BILHETES POR VENDEDOR ==========\n";
-		lista += vendedor.toString() + "\n";
-		
-		boolean temBilhetes = false;
-		boolean temVendas = false;
-		
-		for (int i = 0; i < sistema.rifa.bilhetes.length; i++) {
-			if (sistema.rifa.bilhetes[i] != null) {
-				temBilhetes = true;
-				if (sistema.rifa.bilhetes[i].vendedor.equals(vendedor)) {
-					temVendas = true;
-					lista += "Número: " + sistema.rifa.bilhetes[i].numero +
-							"Comprador: " + sistema.rifa.bilhetes[i].comprador.nome + "\n";
-				}
-			}
-		}
-		
-		if (!temBilhetes) {
-			System.out.println("Não há bilhetes vendidos.");
-		}
-		if (!temVendas) {
-			System.out.println("O vendedor " + nomeVendedor + " ainda não realizou nenhuma venda.");
-		}
-		
-		System.out.println(lista);
+		sistema.listarVendasPorVendedor(nomeVendedor);
 	}
 	
 	static String opcaoSortearNumeroRifa(SistemaRifa sistema,Rifa rifa) {
