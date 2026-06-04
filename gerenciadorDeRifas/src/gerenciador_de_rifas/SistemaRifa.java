@@ -71,15 +71,46 @@ public class SistemaRifa {
 		return false;
 	}
 	
-	//Não vi que era função da pessoa A no dia 3
-	//String listarRelatorioGeral(Rifa rifa) {
-		//String relatorio= "========== RELATÓRIO DA RIFA ==========\n"+
-	    //"PRÊMIO: "+rifa.premio+"\n" +
-		//"PORCENTAGEM DE ARRECADAÇÃO: "+rifa.calcularProgressoEmPorcentagem()+ "%\n"+
-		//"LISTA DE VENDAS:\n"+
-		//rifa.listarBilhetesVendidos()+
-		//"================================================\n";
-		//return relatorio;
-
-	//}
+	String sortearNumero(Rifa rifa) {
+		int quantidadeBilhetesVendidos=0;
+		
+		for(int i=0; i<rifa.bilhetes.length;i++) {
+			if(rifa.bilhetes[i]!=null) {
+				quantidadeBilhetesVendidos++;
+			}
+		}
+		if (quantidadeBilhetesVendidos==0) {
+			return "Nenhum bilhete foi vendido ainda, não é possível sortear!";
+		}
+		Bilhete[] BilhetesPreenchidos=new Bilhete[quantidadeBilhetesVendidos];
+		
+		int contadorAux=0;
+		for(int i=0; i<rifa.bilhetes.length;i++) {
+			if(rifa.bilhetes[i]!=null) {
+				BilhetesPreenchidos[contadorAux] = rifa.bilhetes[i];
+				contadorAux++;
+			}
+		}
+		
+		java.util.Random geradorAleatorio = new java.util.Random();
+		
+		int posicaoSorteada=geradorAleatorio.nextInt(quantidadeBilhetesVendidos);
+		
+		Bilhete bilheteGanhador= rifa.bilhetes[posicaoSorteada];
+		
+		String resultado="";
+		resultado += "\n=================================================\n";
+	    resultado += "        NÚMERO SORTEADO COM SUCESSO!           \n";
+	    resultado += "=================================================\n";
+	    resultado += "Número do Bilhete: " + bilheteGanhador.numero + "\n";
+	    resultado += "Comprador: " + bilheteGanhador.comprador.nome + "\n";
+	    resultado += "Vendedor responsável: " + bilheteGanhador.vendedor.nome+"\n";
+	    resultado += "=================================================\n";
+	    
+	    return resultado;
+		
+		
+	}
+	
+	
 }
