@@ -34,28 +34,58 @@ public class Main {
 		
 	}
 	
-	static void opcaoBuscarVendedorPorNome() {
+	static Vendedor opcaoBuscarVendedorPorNome(SistemaRifa sistema, String nomeVendedor) {
 		
 	}
 	
-	static void opcaoBuscarCompradorPorNome() {
+	static Comprador opcaoBuscarCompradorPorNome(SistemaRifa sistema, String nomeComprador) {
 		
 	}
 	
-	static void opcaoVisualizarNumerosEmGrade() {
-		
+	static void opcaoVisualizarNumerosEmGrade(SistemaRifa sistema) {
+		System.out.println(sistema.rifa.listarBilhetesEmMatriz());
 	}
 	
 	static void opcaoMostrarRelatorio() {
-		
+		 
 	}
 	
 	static void opcaoRankingDeVendedores() {
 		
 	}
 	
-	static void opcaoListarVendasPorVendedor() {
+	static String opcaoListarVendasPorVendedor(SistemaRifa sistema, String nomeVendedor) {
+		Vendedor vendedor = opcaoBuscarVendedorPorNome(sistema, nomeVendedor);
 		
+		if (vendedor == null) {
+			return "Erro: Vendedor " + nomeVendedor + " não encontado";
+		}
+		
+		String lista = "\n========== BILHETES POR VENDEDOR ==========\n";
+		lista += vendedor.toString() + "\n";
+		
+		boolean temBilhetes = false;
+		boolean temVendas = false;
+		
+		for (int i = 0; i < sistema.rifa.bilhetes.length; i++) {
+			if (sistema.rifa.bilhetes[i] != null) {
+				temBilhetes = true;
+				if (sistema.rifa.bilhetes[i].vendedor.equals(vendedor)) {
+					temVendas = true;
+					lista += "Número: " + sistema.rifa.bilhetes[i].numero +
+							"Comprador: " + sistema.rifa.bilhetes[i].comprador.nome + "\n";
+				}
+			}
+		}
+		
+		if (!temBilhetes) {
+			return "Não há bilhetes vendidos.";
+		}
+		if (!temVendas) {
+			return "O vendedor " + nomeVendedor + " ainda não realizou nenhuma venda";
+		}
+		
+		return lista;
 	}
 	
 	static void opcaoSortearNumeroRifa() {
