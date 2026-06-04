@@ -112,5 +112,87 @@ public class SistemaRifa {
 		
 	}
 	
+	void listarRelatorioGeral() {
+		System.out.println("==================== RELATÓRIO GERAL ====================");
+		
+		System.out.println("\nPROGRESSO: ==============================================");
+		System.out.println("Meta de arrecadação: R$ %.2f%n" + rifa.metaArrecadacao);
+		System.out.println("Valor Arrecadado:    R$ %.2f%n" + rifa.calcularValorArrecadado());
+		
+		System.out.println("\nBilhetes vendidos: " + rifa.calcularQtdBilhetesVendidos());
+		System.out.println("Bilhetes disponíveis: " + rifa.calcularQtdBilhetesDisponiveis());
+		
+		System.out.println("\nProgresso: %.1f%%%n" + rifa.calcularProgressoEmPorcentagem());
+		System.out.println("Restante para meta: %.1f%%%n" + rifa.calcularRestanteEmPorcentagem());
+		
+		System.out.println("\nEQUIPE: =================================================");
+		System.out.println("Total de Vendedores: " + totalVendedores);
+		
+		System.out.println("\nVISUALIZAÇÃO GERAL: ======================================");
+		System.out.println(rifa.listarBilhetesEmMatriz());
+		
+		System.out.println("=========================================================");
+	}
+	
+	void carregarRankingDeVendedores() {
+		Vendedor vendedoresOrdenado[] = new Vendedor[totalVendedores];
+		
+		for (int i = 0; i < totalVendedores; i++) {
+			vendedoresOrdenado[i] = vendedores[i];
+		}
+		
+		for (int i = 0; i < vendedoresOrdenado.length - 1; i++) {
+			
+			for (int j = 0; j < vendedoresOrdenado.length - 1 - i; j++) {
+				
+				if (vendedoresOrdenado[j].qtdNumerosVendidos < vendedoresOrdenado[j+1].qtdNumerosVendidos) {
+					Vendedor vendedorAux = vendedoresOrdenado[j];
+					vendedoresOrdenado[j] = vendedoresOrdenado[j+1];
+					vendedoresOrdenado[j+1] = vendedorAux;
+				}
+			}
+		}
+		
+		System.out.println("==================== RANKING DE VENDEDORES ====================");
+		for (int i = 0; i < vendedoresOrdenado.length; i++) {
+			System.out.println((i+1) + "º Lugar: " + vendedoresOrdenado[i].nome + " | Bilhetes vendidos: " + vendedoresOrdenado[i].qtdNumerosVendidos);
+		}
+		System.out.println("===============================================================");
+	}
+	
+	void listarVendasPorVendedor(String nomeVendedor) {
+		Vendedor vendedor = buscarVendedorPorNome(nomeVendedor);
+		
+		if (vendedor == null) {
+			System.out.println("Erro: Vendedor " + nomeVendedor + " não encontado");
+		}
+		
+		String lista = "\n========== BILHETES POR VENDEDOR ==========\n";
+		lista += vendedor.toString() + "\n";
+		
+		boolean temBilhetes = false;
+		boolean temVendas = false;
+		
+		for (int i = 0; i < rifa.bilhetes.length; i++) {
+			if (rifa.bilhetes[i] != null) {
+				temBilhetes = true;
+				if (rifa.bilhetes[i].vendedor.equals(vendedor)) {
+					temVendas = true;
+					lista += "Número: " + rifa.bilhetes[i].numero +
+							"Comprador: " + rifa.bilhetes[i].comprador.nome + "\n";
+				}
+			}
+		}
+		
+		if (!temBilhetes) {
+			System.out.println("Não há bilhetes vendidos.");
+		}
+		if (!temVendas) {
+			System.out.println("O vendedor " + nomeVendedor + " ainda não realizou nenhuma venda.");
+		}
+		
+		System.out.println(lista);
+	}
+	
 	
 }
