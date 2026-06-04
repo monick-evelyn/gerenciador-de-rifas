@@ -18,8 +18,9 @@ public class Main {
 		System.out.println("| 8 - Mostrar Ranking de vendedores            |");
 		System.out.println("| 9 - Listar vendas por vendedor               |");
 		System.out.println("| 10 - Sortear um número da rifa               |");
-		System.out.println("| 0 - Para sair                                |");		
-		return lerInteiro("| Digite a opção desejada:                     |");
+		System.out.println("| 0 - Para sair                                |");
+		System.out.println("|----------------------------------------------|");
+		return lerInteiro("| Digite a opção desejada: ");
 	}
 	
 	static void opcaoCriarRifa(SistemaRifa sistema) {
@@ -95,14 +96,14 @@ public class Main {
 	
 	
 	static String lerTexto(String mensagem) {
-			System.out.println(mensagem);
+			System.out.print(mensagem);
 			
 			String texto=leitor.nextLine();
 			return texto;
 	}
 	
 	static int lerInteiro(String mensagem) {
-		System.out.println(mensagem);
+		System.out.print(mensagem);
 		
 		int numero=leitor.nextInt();
 		
@@ -111,67 +112,77 @@ public class Main {
 	}
 	
 	static double lerDouble(String mensagem) {
-		System.out.println(mensagem);
+		System.out.print(mensagem);
 		
 		double valor=leitor.nextDouble();
 		
 		return valor;
 	}
 	
+	static SistemaRifa criarSistema(String opcao) {
+		if (opcao.equalsIgnoreCase("S")) {
+			int capacidade = lerInteiro("Digite a capacidade de vendedores: ");
+			SistemaRifa novoSistema = new SistemaRifa(capacidade);
+			System.out.println("Sistema cadastrado com sucesso!");
+			return novoSistema;
+		}
+		
+		if (opcao.equalsIgnoreCase("N")) {
+			System.out.println("Encerrando o sistema...");
+			return null;
+		}
+		
+		return null;
+	}
 	
 	public static void main(String[] args) {
-		String opcaoCadastrarSistema=lerTexto("Deseja cadastrar um sistema S/N? ");
-
-		if(opcaoCadastrarSistema.equalsIgnoreCase("S")) {
-			
-			int capacidade=lerInteiro("Digite a capacidade de vendedores: ");
-			
-			SistemaRifa novoSistema=new SistemaRifa(capacidade);
-
-			lerTexto("Sistema cadastrado com sucesso!");
-			
-			int opcaoEscolhaDoUsuario;
+		String opcaoCadastrarSistema=lerTexto("Deseja cadastrar um sistema (S/N)? ");
+		
+		SistemaRifa sistema = criarSistema(opcaoCadastrarSistema);
+		
+		int opcaoEscolhaDoUsuario;
+		if (sistema != null) {
 			do {
 				opcaoEscolhaDoUsuario = mostrarMenu();
 				
 				switch(opcaoEscolhaDoUsuario) {
 					case 1:
-						opcaoCriarRifa(novoSistema);
+						opcaoCriarRifa(sistema);
 						break;
 					
 					case 2:
-						opcaoCadastrarVendedor(novoSistema);
+						opcaoCadastrarVendedor(sistema);
 						break;
 						
 					case 3:
-						opcaoRealizarVenda(novoSistema, novoSistema.rifa);
+						opcaoRealizarVenda(sistema, sistema.rifa);
 						break;
 					
 					case 4:
-						opcaoBuscarVendedorPorNome(novoSistema);
+						opcaoBuscarVendedorPorNome(sistema);
 						break;
 						
 					case 5:
-						opcaoBuscarCompradorPorNome(novoSistema, novoSistema.rifa);
+						opcaoBuscarCompradorPorNome(sistema, sistema.rifa);
 						break;
 					
 					case 6:
-						opcaoVisualizarNumerosEmGrade(novoSistema);
+						opcaoVisualizarNumerosEmGrade(sistema);
 						break;
 					
 					case 7:
-						opcaoMostrarRelatorio(novoSistema);
+						opcaoMostrarRelatorio(sistema);
 						break;
 						
 					case 8:
-						opcaoRankingDeVendedores(novoSistema);
+						opcaoRankingDeVendedores(sistema);
 						break;
 						
 					case 9:
-						opcaoListarVendasPorVendedor(novoSistema);
+						opcaoListarVendasPorVendedor(sistema);
 						break;
 					case 10:
-						opcaoSortearNumeroRifa(novoSistema, novoSistema.rifa);
+						opcaoSortearNumeroRifa(sistema, sistema.rifa);
 						break;
 					
 					case 0:
@@ -184,10 +195,5 @@ public class Main {
 				}
 			} while(opcaoEscolhaDoUsuario != 0);
 		}
-		else {
-			lerTexto("O programa foi encerrao devido a não ter um sistema cadastrado.");
-		}
-		
-		
 	}
 }
