@@ -26,12 +26,15 @@ public class Main {
 	static void opcaoCriarRifa(SistemaRifa sistema) {
 		
 		String premio=lerTexto("Digite o prêmio: ");
-		
+		lerTexto("");
 		Double valorBilhete=lerDouble("Digite o valor do bilhete: ");
 	
-		int capacidade=lerInteiro("Digite a capacidade: ");
+		int capacidade=lerInteiro("Digite a quantidade de bilhetes da rifa: ");
 		
 		sistema.criarRifa(premio, valorBilhete, capacidade);
+		if (sistema.rifa != null) {
+			System.out.println("Rifa criada com sucesso!");
+		}
 	}
 	
 	static void opcaoCadastrarVendedor(SistemaRifa sistema) {
