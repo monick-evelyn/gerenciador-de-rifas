@@ -47,7 +47,6 @@ public class Main {
 	}
 	
 	static void opcaoMostrarRelatorio(SistemaRifa sistema) {
-		 //Dashboard
 		System.out.println("==================== RELATÓRIO GERAL ====================");
 		
 		System.out.println("\nPROGRESSO: ==============================================");
@@ -70,8 +69,32 @@ public class Main {
 		
 	}
 	
-	static void opcaoRankingDeVendedores() {
+	//TODO: Testar o ranking
+	static void opcaoRankingDeVendedores(SistemaRifa sistema) {
+		Vendedor vendedores[] = sistema.vendedores;
+		Vendedor vendedoresOrdenado[] = new Vendedor[sistema.totalVendedores];
 		
+		for (int i = 0; i < sistema.totalVendedores; i++) {
+			vendedoresOrdenado[i] = vendedores[i];
+		}
+		
+		for (int i = 0; i < vendedoresOrdenado.length - 1; i++) {
+			
+			for (int j = 0; j < vendedoresOrdenado.length - 1 - i; j++) {
+				
+				if (vendedoresOrdenado[j].qtdNumerosVendidos < vendedoresOrdenado[j+1].qtdNumerosVendidos) {
+					Vendedor vendedorAux = vendedoresOrdenado[j];
+					vendedoresOrdenado[j] = vendedoresOrdenado[j+1];
+					vendedoresOrdenado[j+1] = vendedorAux;
+				}
+			}
+		}
+		
+		System.out.println("==================== RANKING DE VENDEDORES ====================");
+		for (int i = 0; i < vendedoresOrdenado.length; i++) {
+			System.out.println((i+1) + "º Lugar: " + vendedoresOrdenado[i].nome + " | Bilhetes vendidos: " + vendedoresOrdenado[i].qtdNumerosVendidos);
+		}
+		System.out.println("===============================================================");
 	}
 	
 	static void opcaoListarVendasPorVendedor(SistemaRifa sistema, String nomeVendedor) {
@@ -140,7 +163,7 @@ public class Main {
 	public static void main(String[] args) {
 		int opcao;
 		do {
-			opcao=mostrarMenu();
+			opcao = mostrarMenu();
 			
 			switch(opcao) {
 				case 1:
@@ -190,6 +213,6 @@ public class Main {
 					System.out.println("Opção inválida!");
 					break;
 			}
-		} while(opcao!=0);
+		} while(opcao != 0);
 	}
 }
