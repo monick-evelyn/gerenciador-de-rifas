@@ -7,7 +7,7 @@ public class Main {
 	static Scanner leitor=new Scanner(System.in);
 	
 	static int mostrarMenu() {
-		System.out.println("|----------------MENU DE OPÇÕES----------------|");
+		System.out.println("\n|----------------MENU DE OPÇÕES----------------|");
 		System.out.println("| 1 - Criar Rifa                               |");
 		System.out.println("| 2 - Cadastrar vendedor                       |");
 		System.out.println("| 3 - Realizar venda                           |");
@@ -19,27 +19,53 @@ public class Main {
 		System.out.println("| 9 - Listar vendas por vendedor               |");
 		System.out.println("| 10 - Sortear um número da rifa               |");
 		System.out.println("| 0 - Para sair                                |");		
-		return lerInteiro("| Digite a opção desejada:                      |");
+		return lerInteiro("| Digite a opção desejada:                     |");
 	}
 	
-	static void opcaoCriarRifa() {
+	static void opcaoCriarRifa(SistemaRifa sistema) {
 		
+		String premio=lerTexto("Digite o prêmio: ");
+		
+		Double valorBilhete=lerDouble("Digite o valor do bilhete: ");
+	
+		int capacidade=lerInteiro("Digite a capacidade: ");
+		
+		sistema.criarRifa(premio, valorBilhete, capacidade);
 	}
 	
-	static void opcaoCadastrarVendedor() {
+	static void opcaoCadastrarVendedor(SistemaRifa sistema) {
 		
+		String nomeVendedor=lerTexto("Digite o nome: ");
+		
+		sistema.cadastrarVendedor(nomeVendedor);
 	}
 	
-	static void opcaoRealizarVenda() {
+	static void opcaoRealizarVenda(SistemaRifa sistema, Rifa rifa) {
 		
+		int numeroBilhete=lerInteiro("Digite o numero do bilhete: ");
+		
+		String nomeComprador=lerTexto("Digite o nome do comprador: ");
+		
+		String telefone=lerTexto("Digite o telefone: ");
+		
+		String formaPagamento=lerTexto("Digite a forma de pagamento: ");
+
+		String nomeVendedor=lerTexto("Digite o nome do vendedor: ");
+		
+		sistema.realizarVenda(rifa, numeroBilhete, nomeComprador, telefone, formaPagamento, nomeVendedor);
 	}
 	
-	static Vendedor opcaoBuscarVendedorPorNome(SistemaRifa sistema, String nomeVendedor) {
+	static Vendedor opcaoBuscarVendedorPorNome(SistemaRifa sistema) {
+		String nomeVendedor=lerTexto("Digite o nome do Vendedor: ");
 		
+		return sistema.buscarVendedorPorNome(nomeVendedor);
 	}
 	
-	static Comprador opcaoBuscarCompradorPorNome(SistemaRifa sistema, String nomeComprador) {
+	static Comprador opcaoBuscarCompradorPorNome(SistemaRifa sistema, Rifa rifa) {
 		
+		String nomeComprador=lerTexto("Digite o nome do Comprador: ");
+		
+		return sistema.buscarCompradorPorNome(rifa,nomeComprador);
 	}
 	
 	static void opcaoVisualizarNumerosEmGrade(SistemaRifa sistema) {
@@ -97,8 +123,11 @@ public class Main {
 		System.out.println("===============================================================");
 	}
 	
-	static void opcaoListarVendasPorVendedor(SistemaRifa sistema, String nomeVendedor) {
-		Vendedor vendedor = opcaoBuscarVendedorPorNome(sistema, nomeVendedor);
+	static void opcaoListarVendasPorVendedor(SistemaRifa sistema) {
+		lerTexto("Digite o nome do Vendedor: ");
+		String nomeVendedor=leitor.nextLine();
+
+		Vendedor vendedor = opcaoBuscarVendedorPorNome(sistema);
 		
 		if (vendedor == null) {
 			System.out.println("Erro: Vendedor " + nomeVendedor + " não encontado");
@@ -131,13 +160,13 @@ public class Main {
 		System.out.println(lista);
 	}
 	
-	static void opcaoSortearNumeroRifa() {
-		
+	static String opcaoSortearNumeroRifa(SistemaRifa sistema,Rifa rifa) {
+		return sistema.sortearNumero(rifa);
 	}
 	
 	
 	static String lerTexto(String mensagem) {
-			System.out.print(mensagem);
+			System.out.println(mensagem);
 			
 			String texto=leitor.nextLine();
 			return texto;
@@ -147,6 +176,7 @@ public class Main {
 		System.out.println(mensagem);
 		
 		int numero=leitor.nextInt();
+		
 		
 		return numero;
 	}
@@ -161,58 +191,74 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		int opcao;
-		do {
-			opcao = mostrarMenu();
+		String opcaoCadastrarSistema=lerTexto("Deseja cadastrar um sistema S/N? ");
+
+		if(opcaoCadastrarSistema.equalsIgnoreCase("S")) {
 			
-			switch(opcao) {
-				case 1:
-					opcaoCriarRifa();
-					break;
+			int capacidade=lerInteiro("Digite a capacidade de vendedores: ");
+			
+			SistemaRifa novoSistema=new SistemaRifa(capacidade);
+
+			lerTexto("Sistema cadastrado com sucesso!");
+			
+			int opcaoEscolhaDoUsuario;
+			do {
+				opcaoEscolhaDoUsuario = mostrarMenu();
 				
-				case 2:
-					opcaoCadastrarVendedor();
-					break;
+				switch(opcaoEscolhaDoUsuario) {
+					case 1:
+						opcaoCriarRifa(novoSistema);
+						break;
 					
-				case 3:
-					opcaoRealizarVenda();
-					break;
-				
-				case 4:
-					opcaoBuscarVendedorPorNome();
-					break;
+					case 2:
+						opcaoCadastrarVendedor(novoSistema);
+						break;
+						
+					case 3:
+						opcaoRealizarVenda(novoSistema, novoSistema.rifa);
+						break;
 					
-				case 5:
-					opcaoBuscarCompradorPorNome();
-					break;
-				
-				case 6:
-					opcaoVisualizarNumerosEmGrade();
-					break;
-				
-				case 7:
-					opcaoMostrarRelatorio();
-					break;
+					case 4:
+						opcaoBuscarVendedorPorNome(novoSistema);
+						break;
+						
+					case 5:
+						opcaoBuscarCompradorPorNome(novoSistema, novoSistema.rifa);
+						break;
 					
-				case 8:
-					opcaoRankingDeVendedores();
-					break;
+					case 6:
+						opcaoVisualizarNumerosEmGrade(novoSistema);
+						break;
 					
-				case 9:
-					opcaoListarVendasPorVendedor();
-					break;
-				case 10:
-					opcaoSortearNumeroRifa();
-					break;
-				
-				case 0:
-					System.out.println("Saindo do sistema...");
-					break;
+					case 7:
+						opcaoMostrarRelatorio(novoSistema);
+						break;
+						
+					case 8:
+						opcaoRankingDeVendedores(novoSistema);
+						break;
+						
+					case 9:
+						opcaoListarVendasPorVendedor(novoSistema);
+						break;
+					case 10:
+						opcaoSortearNumeroRifa(novoSistema, novoSistema.rifa);
+						break;
 					
-				default:
-					System.out.println("Opção inválida!");
-					break;
-			}
-		} while(opcao != 0);
+					case 0:
+						System.out.println("Saindo do sistema...");
+						break;
+						
+					default:
+						System.out.println("Opção inválida!");
+						break;
+				}
+			} while(opcaoEscolhaDoUsuario != 0);
+		}
+		else {
+			lerTexto("O programa foi encerrao devido a não ter um sistema cadastrado.");
+		}
+		
+		
 	}
 }
