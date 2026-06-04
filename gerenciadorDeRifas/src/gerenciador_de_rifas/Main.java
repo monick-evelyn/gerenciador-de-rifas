@@ -54,11 +54,11 @@ public class Main {
 		
 	}
 	
-	static String opcaoListarVendasPorVendedor(SistemaRifa sistema, String nomeVendedor) {
+	static void opcaoListarVendasPorVendedor(SistemaRifa sistema, String nomeVendedor) {
 		Vendedor vendedor = opcaoBuscarVendedorPorNome(sistema, nomeVendedor);
 		
 		if (vendedor == null) {
-			return "Erro: Vendedor " + nomeVendedor + " não encontado";
+			System.out.println("Erro: Vendedor " + nomeVendedor + " não encontado");
 		}
 		
 		String lista = "\n========== BILHETES POR VENDEDOR ==========\n";
@@ -79,13 +79,13 @@ public class Main {
 		}
 		
 		if (!temBilhetes) {
-			return "Não há bilhetes vendidos.";
+			System.out.println("Não há bilhetes vendidos.");
 		}
 		if (!temVendas) {
-			return "O vendedor " + nomeVendedor + " ainda não realizou nenhuma venda";
+			System.out.println("O vendedor " + nomeVendedor + " ainda não realizou nenhuma venda.");
 		}
 		
-		return lista;
+		System.out.println(lista);
 	}
 	
 	static void opcaoSortearNumeroRifa() {
