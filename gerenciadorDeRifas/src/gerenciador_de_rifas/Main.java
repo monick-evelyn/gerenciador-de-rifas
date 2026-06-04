@@ -46,8 +46,28 @@ public class Main {
 		System.out.println(sistema.rifa.listarBilhetesEmMatriz());
 	}
 	
-	static void opcaoMostrarRelatorio() {
-		 
+	static void opcaoMostrarRelatorio(SistemaRifa sistema) {
+		 //Dashboard
+		System.out.println("==================== RELATÓRIO GERAL ====================");
+		
+		System.out.println("\nPROGRESSO: ==============================================");
+		System.out.println("Meta de arrecadação: R$ %.2f%n" + sistema.rifa.metaArrecadacao);
+		System.out.println("Valor Arrecadado:    R$ %.2f%n" + sistema.rifa.calcularValorArrecadado());
+		
+		System.out.println("\nBilhetes vendidos: " + sistema.rifa.calcularQtdBilhetesVendidos());
+		System.out.println("Bilhetes disponíveis: " + sistema.rifa.calcularQtdBilhetesDisponiveis());
+		
+		System.out.println("\nProgresso: %.1f%%%n" + sistema.rifa.calcularProgressoEmPorcentagem());
+		System.out.println("Restante para meta: %.1f%%%n" + sistema.rifa.calcularRestanteEmPorcentagem());
+		
+		System.out.println("\nEQUIPE: =================================================");
+		System.out.println("Total de Vendedores: " + sistema.totalVendedores);
+		
+		System.out.println("\nVISUALIZAÇÃO GERAL: ======================================");
+		System.out.println(sistema.rifa.listarBilhetesEmMatriz());
+		
+		System.out.println("=========================================================");
+		
 	}
 	
 	static void opcaoRankingDeVendedores() {
