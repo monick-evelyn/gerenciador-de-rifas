@@ -5,12 +5,16 @@ public class SistemaRifa {
 	Vendedor vendedores[];
 	int totalVendedores;
 	
+	SistemaRifa (int capacidadeVendedores){
+		this.rifa = null;
+		vendedores = new Vendedor[capacidadeVendedores];
+		totalVendedores = 0;
+	}
+	
 	boolean criarRifa(String premio, double valorBilhete, int capacidadeBilhetes) {
-		
-		if(rifa==null){
-			
-			Rifa novaRifa= new Rifa(premio, valorBilhete, capacidadeBilhetes);
-			
+		if(this.rifa == null){
+			Rifa novaRifa = new Rifa(premio, valorBilhete, capacidadeBilhetes);
+			this.rifa = novaRifa;
 			return true;
 		}
 		return false;	
