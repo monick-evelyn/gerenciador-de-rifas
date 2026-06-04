@@ -13,12 +13,13 @@ public class Main {
 		System.out.println("| 3 - Realizar venda                           |");
 		System.out.println("| 4 - Buscar Vendedor por nome                 |");
 		System.out.println("| 5 - Buscar Comprador por nome                |");
-		System.out.println("| 6 - Mostrar relatório                        |");
-		System.out.println("| 7 - Mostrar Ranking de vendedores            |");
-		System.out.println("| 8 - Listar vendas por vendedor               |");
-		System.out.println("| 9 - Sortear um número da rifa                |");
+		System.out.println("| 6 - Visualizar números em grade              |");
+		System.out.println("| 7 - Mostrar relatório geral                  |");
+		System.out.println("| 8 - Mostrar Ranking de vendedores            |");
+		System.out.println("| 9 - Listar vendas por vendedor               |");
+		System.out.println("| 10 - Sortear um número da rifa               |");
 		System.out.println("| 0 - Para sair                                |");		
-		return lerInteiro("| Digite a opção desejada:                     |");
+		return lerInteiro("| Digite a opção desejada:                      |");
 	}
 	
 	static void opcaoCriarRifa() {
@@ -41,15 +42,13 @@ public class Main {
 		
 	}
 	
-	static void opcaoMostrarRelatorio() {
+	static void opcaoVisualizarNumerosEmGrade() {
 		
 	}
 	
-	
-	//static String opcaoMostrarRifa() {
-		//return "Em processo...";
+	static void opcaoMostrarRelatorio() {
 		
-	//}
+	}
 	
 	static void opcaoRankingDeVendedores() {
 		
@@ -115,18 +114,21 @@ public class Main {
 					break;
 				
 				case 6:
-					opcaoMostrarRelatorio();
+					opcaoVisualizarNumerosEmGrade();
 					break;
 				
 				case 7:
-					opcaoRankingDeVendedores();
+					opcaoMostrarRelatorio();
 					break;
 					
 				case 8:
-					opcaoListarVendasPorVendedor();
+					opcaoRankingDeVendedores();
 					break;
 					
 				case 9:
+					opcaoListarVendasPorVendedor();
+					break;
+				case 10:
 					opcaoSortearNumeroRifa();
 					break;
 				
