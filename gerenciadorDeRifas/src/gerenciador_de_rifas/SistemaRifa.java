@@ -33,7 +33,7 @@ public class SistemaRifa {
 	
 	Vendedor buscarVendedorPorNome(String nome) {
 		for(Vendedor vendedorAtual:vendedores) {
-			if(vendedorAtual.nome.equalsIgnoreCase(nome)) {
+			if(vendedorAtual!=null && vendedorAtual.nome.equalsIgnoreCase(nome)) {
 				return vendedorAtual;
 			}
 		}
@@ -50,25 +50,20 @@ public class SistemaRifa {
 		return null;
 	}
 	
-	boolean realizarVenda(Rifa rifa,int numeroBilhete, String nomeComprador, String telefone, String formaPagamento, String nomeVendedor) {
-		if(rifa.verificarNumeroDisponivel(numeroBilhete)==true) {
-						
-			Vendedor vendedorAuxiliar=buscarVendedorPorNome(nomeVendedor);
-			if(vendedorAuxiliar==null) {
-				System.out.println("O vendedor não foi encontrado!");
-				return false;
-			}
-			
-			Comprador novoComprador=new Comprador(nomeComprador, telefone);
+	void realizarVenda(Rifa rifa,int numeroBilhete, String nomeComprador, String telefone, String formaPagamento, String nomeVendedor) {
+		Vendedor vendedorAuxiliar=buscarVendedorPorNome(nomeVendedor);
+					
+		Comprador novoComprador=new Comprador(nomeComprador, telefone);
 
-			Bilhete novoBilhete=new Bilhete(numeroBilhete, novoComprador,vendedorAuxiliar,formaPagamento);
-			
+		Bilhete novoBilhete=new Bilhete(numeroBilhete, novoComprador,vendedorAuxiliar,formaPagamento);
+		for(int i=0;i<rifa.bilhetes.length;i++) {
 			rifa.bilhetes[rifa.totalBilhetes]=novoBilhete;
-			
-			rifa.totalBilhetes++;
-			return true;
 		}
-		return false;
+		
+		if(vendedorAuxiliar!=null) {
+			vendedorAuxiliar.qtdNumerosVendidos++;
+		}
+		rifa.totalBilhetes++;
 	}
 	
 	String sortearNumero(Rifa rifa) {

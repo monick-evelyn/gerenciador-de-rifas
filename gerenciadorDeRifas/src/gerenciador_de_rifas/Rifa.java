@@ -71,7 +71,7 @@ public class Rifa {
 	}
 	
 	int calcularQtdBilhetesDisponiveis() {
-		return calcularQtdBilhetesDisponiveis() - bilhetes.length;
+		return bilhetes.length - calcularQtdBilhetesVendidos();	
 	}
 	
 	//TODO: Formatação de retorno double na main
