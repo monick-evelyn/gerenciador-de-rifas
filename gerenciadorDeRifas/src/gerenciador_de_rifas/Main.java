@@ -41,10 +41,17 @@ public class Main {
 	}
 	
 	static void opcaoCadastrarVendedor(SistemaRifa sistema) {
-		
-		String nomeVendedor=lerTexto("Digite o nome: ");
-		
-		sistema.cadastrarVendedor(nomeVendedor);
+		if (sistema.totalVendedores < sistema.vendedores.length) {
+			String nomeVendedor=lerTexto("Digite o nome: ");
+			lerTexto("");
+			if (sistema.cadastrarVendedor(nomeVendedor)) {
+				System.out.println("Vendedor cadastrado com sucesso!");
+			} else {
+				System.out.println("Erro: Não foi possível cadastrar o vendedor.");
+			}
+		} else {
+			System.out.println("Erro: Capacidade de vendedores atingida.");
+		}
 	}
 	
 	static void opcaoRealizarVenda(SistemaRifa sistema, Rifa rifa) {
