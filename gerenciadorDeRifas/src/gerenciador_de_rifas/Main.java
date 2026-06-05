@@ -28,7 +28,6 @@ public class Main {
 			System.out.println("Já existe uma rifa cadastrada.");
 		} else {
 			String premio=lerTexto("Digite o prêmio: ");
-			lerTexto("");
 			Double valorBilhete=lerDouble("Digite o valor do bilhete: ");
 		
 			int capacidade=lerInteiro("Digite a quantidade de bilhetes da rifa: ");
@@ -43,7 +42,6 @@ public class Main {
 	static void opcaoCadastrarVendedor(SistemaRifa sistema) {
 		if (sistema.totalVendedores < sistema.vendedores.length) {
 			String nomeVendedor=lerTexto("Digite o nome: ");
-			lerTexto("");
 			if (sistema.cadastrarVendedor(nomeVendedor)) {
 				System.out.println("Vendedor cadastrado com sucesso!");
 			} else {
@@ -55,8 +53,41 @@ public class Main {
 	}
 	
 	static void opcaoRealizarVenda(SistemaRifa sistema, Rifa rifa) {
+		if(rifa==null ) {
+			System.out.println("Erro: é necessário criar uma rifa primeiro!");
+			mostrarMenu();
+			return;
+		}
+		if(rifa.calcularQtdBilhetesDisponiveis()==0) {
+			System.out.println("Erro: não existem bilhetes disponíveis!");
+			mostrarMenu();
+			return;
+		}
+		if(sistema.totalVendedores==0) {
+			System.out.println("Erro: não existem vendedores disponíveis!");
+			mostrarMenu();
+			return;
+		}
 		
 		int numeroBilhete=lerInteiro("Digite o numero do bilhete: ");
+		boolean bilheteInvalido=true;
+		
+		while(bilheteInvalido) {
+			if(numeroBilhete<1 || numeroBilhete> rifa.bilhetes.length) {
+				numeroBilhete=lerInteiro("Erro: O bilhete já foi vendido ou não existe! Tente novamente: ");
+			}else if(rifa.verificarNumeroDisponivel(numeroBilhete)==false){
+				numeroBilhete=lerInteiro("Erro: O bilhete já foi vendido ou não existe! Tente novamente: ");
+			}else {
+				bilheteInvalido=false;
+			}
+		}
+		
+		String nomeVendedor=lerTexto("Digite o nome do vendedor: ");
+		Vendedor vendedorAuxiliar=sistema.buscarVendedorPorNome(nomeVendedor);
+		while(vendedorAuxiliar==null) {
+			nomeVendedor=lerTexto("Erro: O vendedor não existe, digite novamente!");
+			vendedorAuxiliar=sistema.buscarVendedorPorNome(nomeVendedor);
+		}
 		
 		String nomeComprador=lerTexto("Digite o nome do comprador: ");
 		
@@ -64,15 +95,24 @@ public class Main {
 		
 		String formaPagamento=lerTexto("Digite a forma de pagamento: ");
 
-		String nomeVendedor=lerTexto("Digite o nome do vendedor: ");
-		
 		sistema.realizarVenda(rifa, numeroBilhete, nomeComprador, telefone, formaPagamento, nomeVendedor);
+		
+		System.out.println("Venda realizada com sucesso!");
 	}
 	
-	static Vendedor opcaoBuscarVendedorPorNome(SistemaRifa sistema) {
+	static String opcaoBuscarVendedorPorNome(SistemaRifa sistema) {
+		
 		String nomeVendedor=lerTexto("Digite o nome do Vendedor: ");
 		
-		return sistema.buscarVendedorPorNome(nomeVendedor);
+		Vendedor vendedorEncontrado= sistema.buscarVendedorPorNome(nomeVendedor);
+		
+		if(vendedorEncontrado==null) {
+			return "Erro: O vendedor não foi encontrado!";
+		}
+		
+		String lista="";
+		lista+=vendedorEncontrado.toString();
+		return lista;
 	}
 	
 	static Comprador opcaoBuscarCompradorPorNome(SistemaRifa sistema, Rifa rifa) {
@@ -109,6 +149,7 @@ public class Main {
 	
 	
 	static String lerTexto(String mensagem) {
+			
 			System.out.print(mensagem);
 			
 			String texto=leitor.nextLine();
@@ -116,23 +157,48 @@ public class Main {
 	}
 	
 	static int lerInteiro(String mensagem) {
-		System.out.print(mensagem);
+		int numero=-1;
+		boolean entradaValida=false;
 		
-		int numero=leitor.nextInt();
-		
-		
+		while(entradaValida==false) {
+			System.out.print(mensagem);
+			
+			if(leitor.hasNextInt()) {
+				numero=leitor.nextInt();
+				leitor.nextLine();
+				entradaValida=true;
+			}else {
+				System.out.println("Erro: Você deve digitar apenas números inteiros!");
+				leitor.nextLine();
+			}
+		}		
 		return numero;
 	}
 	
 	static double lerDouble(String mensagem) {
-		System.out.print(mensagem);
+		double numero=-1;
+		boolean entradaValida=false;
 		
-		double valor=leitor.nextDouble();
+		while(entradaValida==false) {
+			System.out.print(mensagem);
+			
+			if(leitor.hasNextDouble()) {
+				numero=leitor.nextDouble();
+				leitor.nextLine();
+				entradaValida=true;
+			}else {
+				System.out.println("Erro: Você deve digitar apenas números!");
+				leitor.nextLine();
+			}
+		}
 		
-		return valor;
+		return numero;
 	}
 	
 	static SistemaRifa criarSistema(String opcao) {
+		while(!opcao.equalsIgnoreCase("S") && !opcao.equalsIgnoreCase("N")) {
+			opcao=lerTexto("ERRO: Opção inválida, por favor digite (S/N): ");
+		}
 		if (opcao.equalsIgnoreCase("S")) {
 			int capacidade = lerInteiro("Digite a capacidade de vendedores: ");
 			SistemaRifa novoSistema = new SistemaRifa(capacidade);
