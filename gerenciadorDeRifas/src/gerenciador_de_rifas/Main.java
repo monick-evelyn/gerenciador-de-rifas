@@ -100,51 +100,93 @@ public class Main {
 		System.out.println("Venda realizada com sucesso!");
 	}
 	
-	static String opcaoBuscarVendedorPorNome(SistemaRifa sistema) {
+	static void opcaoBuscarVendedorPorNome(SistemaRifa sistema) {
 		
 		String nomeVendedor=lerTexto("Digite o nome do Vendedor: ");
 		
 		Vendedor vendedorEncontrado= sistema.buscarVendedorPorNome(nomeVendedor);
 		
 		if(vendedorEncontrado==null) {
-			return "Erro: O vendedor não foi encontrado!";
+			System.out.println("Erro: O vendedor não foi encontrado!"); 
+			return;
 		}
 		
-		String lista="";
-		lista+=vendedorEncontrado.toString();
-		return lista;
+		System.out.println(vendedorEncontrado.toString());
+		
 	}
 	
-	static Comprador opcaoBuscarCompradorPorNome(SistemaRifa sistema, Rifa rifa) {
+	static void opcaoBuscarCompradorPorNome(SistemaRifa sistema, Rifa rifa) {
+		if(rifa==null ) {
+			System.out.println("Erro: é necessário criar uma rifa primeiro!");
+			return;
+		}
 		
 		String nomeComprador=lerTexto("Digite o nome do Comprador: ");
-		
-		return sistema.buscarCompradorPorNome(rifa,nomeComprador);
+		if(sistema.buscarCompradorPorNome(rifa, nomeComprador)==null) {
+			System.out.println("Erro: O comprador não foi encontrado!"); 
+			return;
+		}
+		System.out.println(sistema.buscarCompradorPorNome(rifa,nomeComprador));
 	}
 	
 	static void opcaoVisualizarNumerosEmGrade(SistemaRifa sistema) {
+		if(sistema.rifa==null ) {
+			System.out.println("Erro: é necessário criar uma rifa primeiro!");
+			return;
+		}
+		if(sistema.rifa.bilhetes.length==0) {
+			System.out.println("Não existem bilhetes por enquanto");
+			return;
+		}
 		System.out.println(sistema.rifa.listarBilhetesEmMatriz());
 	}
 	
 	static void opcaoMostrarRelatorio(SistemaRifa sistema) {
+		if(sistema.rifa==null ) {
+			System.out.println("Erro: é necessário criar uma rifa primeiro!");
+			return;
+		}
+		
 		sistema.listarRelatorioGeral();
 		
 	}
 	
 	//TODO: Testar o ranking
 	static void opcaoRankingDeVendedores(SistemaRifa sistema) {
+		if(sistema.totalVendedores==0) {
+			System.out.println("Erro: Não existem vendedore cadastrados por enquanto!");
+			return;
+		}
+		
 		sistema.carregarRankingDeVendedores();
 	}
 	
 	static void opcaoListarVendasPorVendedor(SistemaRifa sistema) {
-		lerTexto("Digite o nome do Vendedor: ");
-		String nomeVendedor=leitor.nextLine();
+		if(sistema.rifa==null ) {
+			System.out.println("Erro: é necessário criar uma rifa primeiro!");
+			return;
+		}
+		if(sistema.totalVendedores==0) {
+			System.out.println("Erro: Não existem vendedores cadastrados por enquanto!");
+			return;
+			
+		}
+		
+		String nomeVendedor=lerTexto("Digite o nome do Vendedor: ");
 
 		sistema.listarVendasPorVendedor(nomeVendedor);
 	}
 	
-	static String opcaoSortearNumeroRifa(SistemaRifa sistema,Rifa rifa) {
-		return sistema.sortearNumero(rifa);
+	static void opcaoSortearNumeroRifa(SistemaRifa sistema,Rifa rifa) {
+		if(sistema.rifa==null ) {
+			System.out.println("Erro: é necessário criar uma rifa primeiro!");
+			return;
+		}
+		if(sistema.rifa.calcularQtdBilhetesVendidos()==0) {
+			System.out.println("Erro: Não existe nenhum bilhete vendido para ser sorteado");
+			return;
+		}
+		System.out.println(sistema.sortearNumero(rifa));
 	}
 	
 	
