@@ -119,19 +119,38 @@ public class Rifa {
 	}
 
 	String listarBilhetesEmMatriz() {
+		int controlador = 0;
+		
+		if(bilhetes.length<10) {
+			String bilhetesEmMatriz = "==================== VISUALIZAÇÃO GERAL DE BILHETES ====================\n";
+			for(int i=0; i< bilhetes.length;i++) {
+				bilhetesEmMatriz+= " "+(controlador+1)+" ";
+				controlador++;
+			}
+			bilhetesEmMatriz += "========================================================================\n";
+			return bilhetesEmMatriz;
+		}
+		
 		int colunas = 10;
 		int linhas = bilhetes.length / colunas;
 		
+		if(bilhetes.length/colunas!=0) {
+			linhas++;
+		}
+		
 		String bilhetesEmMatriz = "==================== VISUALIZAÇÃO GERAL DE BILHETES ====================\n";
 		
-		int controlador = 0;
+		controlador = 0;
 		for (int i = 0; i < linhas; i++) {
 			for (int j = 0; j < colunas; j++) {
-				if (bilhetes[controlador] != null) {
-					bilhetesEmMatriz += "   X   ";
-				} else {
-					bilhetesEmMatriz += "   " + (controlador+1) + "   ";
+				if(controlador<bilhetes.length) {
+					if (bilhetes[controlador] != null) {
+						bilhetesEmMatriz += "   X   ";
+					} else {
+						bilhetesEmMatriz += "   " + (controlador+1) + "   ";
+					}
 				}
+				
 				controlador++;
 			}
 			bilhetesEmMatriz += "\n";
