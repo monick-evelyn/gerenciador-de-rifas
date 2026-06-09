@@ -96,8 +96,8 @@ public class SistemaRifa {
 		resultado += "\n=================================================\n";
 	    resultado += "        NÚMERO SORTEADO COM SUCESSO!           \n";
 	    resultado += "=================================================\n";
-	    resultado += "Número do Bilhete: " + bilheteGanhador.numero + "\n";
-	    resultado += "Comprador: " + bilheteGanhador.comprador.nome + "\n";
+	    resultado += "Número do Bilhete: " + bilheteGanhador.numero;
+	    resultado += bilheteGanhador.comprador.toString() + "\n";
 	    resultado += "Vendedor responsável: " + bilheteGanhador.vendedor.nome+"\n";
 	    resultado += "=================================================\n";
 	    
