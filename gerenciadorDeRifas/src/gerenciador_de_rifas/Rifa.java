@@ -51,9 +51,7 @@ public class Rifa {
 					
 					return "Bilhete vendido com sucesso!";
 				}
-				return "Bilhete com o número " + numero + " não está disponível.";
 			}
-			return "Bilhete com o número " + numero + " não encontrado.";
 		}
 		return "Não foi possível vender o bilhete";
 	}

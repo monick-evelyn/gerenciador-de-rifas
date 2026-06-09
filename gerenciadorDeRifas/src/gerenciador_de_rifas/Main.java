@@ -72,17 +72,14 @@ public class Main {
 	static void opcaoRealizarVenda(SistemaRifa sistema) {
 		if(sistema.rifa==null ) {
 			System.out.println("Erro: é necessário criar uma rifa primeiro!");
-			mostrarMenu();
 			return;
 		}
 		if(sistema.rifa.calcularQtdBilhetesDisponiveis()==0) {
 			System.out.println("Erro: não existem bilhetes disponíveis!");
-			mostrarMenu();
 			return;
 		}
 		if(sistema.totalVendedores==0) {
 			System.out.println("Erro: não existem vendedores disponíveis!");
-			mostrarMenu();
 			return;
 		}
 		
@@ -114,9 +111,6 @@ public class Main {
 		String formaPagamento=sistema.rifa.cadastrarFormaDePagamento(opcaoPagamento);
 
 		sistema.realizarVenda(numeroBilhete, nomeComprador, telefone, formaPagamento, nomeVendedor);
-		
-		
-		System.out.println("Venda realizada com sucesso!");
 	}
 	
 	static void opcaoBuscarVendedorPorNome(SistemaRifa sistema) {

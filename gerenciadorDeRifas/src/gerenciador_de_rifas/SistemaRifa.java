@@ -65,15 +65,13 @@ public class SistemaRifa {
 		Vendedor vendedorAuxiliar=buscarVendedorPorNome(nomeVendedor);
 					
 		Comprador novoComprador=new Comprador(nomeComprador, telefone);
-
-		Bilhete novoBilhete=new Bilhete(numeroBilhete, novoComprador,vendedorAuxiliar,formaPagamento);
-		rifa.bilhetes[numeroBilhete-1]=novoBilhete;
 		
-		
-		if(vendedorAuxiliar!=null) {
-			vendedorAuxiliar.qtdNumerosVendidos++;
+		if(vendedorAuxiliar==null) {
+			System.out.println("Erro: vendedor não existe.");
+			return;
 		}
-		rifa.totalBilhetes++;
+		
+		System.out.println(rifa.venderBilhete(numeroBilhete, novoComprador, vendedorAuxiliar, formaPagamento));
 	}
 	
 	String sortearNumero() {
