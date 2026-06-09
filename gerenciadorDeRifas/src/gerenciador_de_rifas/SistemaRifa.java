@@ -96,8 +96,8 @@ public class SistemaRifa {
 		resultado += "\n=================================================\n";
 	    resultado += "        NÚMERO SORTEADO COM SUCESSO!           \n";
 	    resultado += "=================================================\n";
-	    resultado += "Número do Bilhete: " + bilheteGanhador.numero + "\n";
-	    resultado += "Comprador: " + bilheteGanhador.comprador.nome + "\n";
+	    resultado += "Número do Bilhete: " + bilheteGanhador.numero;
+	    resultado += bilheteGanhador.comprador.toString() + "\n";
 	    resultado += "Vendedor responsável: " + bilheteGanhador.vendedor.nome+"\n";
 	    resultado += "=================================================\n";
 	    
@@ -109,15 +109,16 @@ public class SistemaRifa {
 	void listarRelatorioGeral() {
 		System.out.println("\n==================== RELATÓRIO GERAL ====================");
 		
+		System.out.println(rifa.toString());
 		System.out.println("\nPROGRESSO: ==============================================");
-		System.out.printf("Meta de arrecadação: R$ %.2f%n\n",rifa.metaArrecadacao);
-		System.out.printf("Valor Arrecadado:    R$ %.2f%n\n",rifa.calcularValorArrecadado());
+		System.out.printf("Meta de arrecadação: R$ %.2f%n",rifa.metaArrecadacao);
+		System.out.printf("Valor Arrecadado:    R$ %.2f%n",rifa.calcularValorArrecadado());
 		
 		System.out.println("\nBilhetes vendidos: " + rifa.calcularQtdBilhetesVendidos());
 		System.out.println("Bilhetes disponíveis: " + rifa.calcularQtdBilhetesDisponiveis());
 		
-		System.out.printf("\nProgresso: %.1f%%%n\n", rifa.calcularProgressoEmPorcentagem());
-		System.out.printf("Restante para meta: %.1f%%%n\n", rifa.calcularRestanteEmPorcentagem());
+		System.out.printf("\nProgresso: %.1f%%%n", rifa.calcularProgressoEmPorcentagem());
+		System.out.printf("Restante para meta: %.1f%%%n", rifa.calcularRestanteEmPorcentagem());
 		
 		System.out.println("\nEQUIPE: =================================================");
 		System.out.println("Total de Vendedores: " + totalVendedores);

@@ -52,6 +52,15 @@ public class Main {
 		}
 	}
 	
+	static int menuCadastrarFormaDePagamento() {
+		System.out.println("\nEscolha uma forma de pagamento: ");
+		System.out.println("1 - PIX");
+		System.out.println("2 - Dinheiro");
+		System.out.println("3 - Outro");
+		int opcao = lerInteiro("Digite a opção: ");
+		return opcao;
+	}
+	
 	static void opcaoRealizarVenda(SistemaRifa sistema, Rifa rifa) {
 		if(rifa==null ) {
 			System.out.println("Erro: é necessário criar uma rifa primeiro!");
@@ -85,7 +94,7 @@ public class Main {
 		String nomeVendedor=lerTexto("Digite o nome do vendedor: ");
 		Vendedor vendedorAuxiliar=sistema.buscarVendedorPorNome(nomeVendedor);
 		while(vendedorAuxiliar==null) {
-			nomeVendedor=lerTexto("Erro: O vendedor não existe, digite novamente!");
+			nomeVendedor=lerTexto("Erro: O vendedor não existe, digite novamente: ");
 			vendedorAuxiliar=sistema.buscarVendedorPorNome(nomeVendedor);
 		}
 		
@@ -93,9 +102,11 @@ public class Main {
 		
 		String telefone=lerTexto("Digite o telefone: ");
 		
-		String formaPagamento=lerTexto("Digite a forma de pagamento: ");
+		int opcaoPagamento = menuCadastrarFormaDePagamento();
+		String formaPagamento=rifa.cadastrarFormaDePagamento(opcaoPagamento);
 
 		sistema.realizarVenda(rifa, numeroBilhete, nomeComprador, telefone, formaPagamento, nomeVendedor);
+		
 		
 		System.out.println("Venda realizada com sucesso!");
 	}
@@ -151,7 +162,6 @@ public class Main {
 		
 	}
 	
-	//TODO: Testar o ranking
 	static void opcaoRankingDeVendedores(SistemaRifa sistema) {
 		if(sistema.totalVendedores==0) {
 			System.out.println("Erro: Não existem vendedore cadastrados por enquanto!");
