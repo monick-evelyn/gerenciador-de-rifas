@@ -16,7 +16,6 @@ public class Rifa {
 	}
 	
 	boolean verificarNumeroDisponivel(int numero) {
-		//TODO: Verificar se numero existe no sistemaRifa
 		for (int i = 0; i < bilhetes.length; i++) {
 			if ((i+1) == numero) {
 				if (bilhetes[i] == null) {
@@ -42,7 +41,6 @@ public class Rifa {
 	}
 	
 	String venderBilhete(int numero, Comprador comprador, Vendedor vendedor, String formaDePagamento) {
-		//TODO: Verificar se esse método pode ser dividido em mais funções
 		for (int i = 0; i < bilhetes.length; i++) {
 			if ((i+1) == numero) {
 				if (verificarNumeroDisponivel(numero)) {
@@ -74,7 +72,6 @@ public class Rifa {
 		return bilhetes.length - calcularQtdBilhetesVendidos();	
 	}
 	
-	//TODO: Formatação de retorno double na main
 	double calcularValorArrecadado() {
 		return calcularQtdBilhetesVendidos() * valorPorBilhete;
 	}
