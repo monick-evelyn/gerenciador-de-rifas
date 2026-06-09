@@ -21,7 +21,6 @@ public class SistemaRifa {
 	}
 	
 	boolean cadastrarVendedor(String nome) {
-		
 		if(totalVendedores < vendedores.length) {
 			Vendedor novoVendedor=new Vendedor(nome);
 			vendedores[totalVendedores]=novoVendedor;
@@ -40,17 +39,29 @@ public class SistemaRifa {
 		return null;
 	}
 	
-	Comprador buscarCompradorPorNome(Rifa rifa, String nome) {
+	
+	void listarVendas() {
 		
-		for(int i=0; i<rifa.totalBilhetes;i++){
-			if(rifa.bilhetes[i].comprador.nome.equalsIgnoreCase(nome)){
-				return rifa.bilhetes[i].comprador;
+		String lista = "\n========== BILHETES VENDIDOS ==========\n";
+		lista += "Bilhetes vendidos: "+ rifa.calcularQtdBilhetesVendidos() + "\n";
+		
+		boolean temBilhetes = false;
+		
+		for (int i = 0; i < rifa.bilhetes.length; i++) {
+			if (rifa.bilhetes[i] != null) {
+				temBilhetes = true;
+				lista += rifa.bilhetes[i].toString() + "\n";
 			}
 		}
-		return null;
+		
+		if (!temBilhetes) {
+			System.out.println("Não há bilhetes vendidos.");
+		}
+		
+		System.out.println(lista);
 	}
 	
-	void realizarVenda(Rifa rifa,int numeroBilhete, String nomeComprador, String telefone, String formaPagamento, String nomeVendedor) {
+	void realizarVenda(int numeroBilhete, String nomeComprador, String telefone, String formaPagamento, String nomeVendedor) {
 		Vendedor vendedorAuxiliar=buscarVendedorPorNome(nomeVendedor);
 					
 		Comprador novoComprador=new Comprador(nomeComprador, telefone);
@@ -65,7 +76,7 @@ public class SistemaRifa {
 		rifa.totalBilhetes++;
 	}
 	
-	String sortearNumero(Rifa rifa) {
+	String sortearNumero() {
 		int quantidadeBilhetesVendidos=0;
 		
 		for(int i=0; i<rifa.bilhetes.length;i++) {
@@ -88,7 +99,7 @@ public class SistemaRifa {
 		
 		java.util.Random geradorAleatorio = new java.util.Random();
 		
-		int posicaoSorteada=geradorAleatorio.nextInt(quantidadeBilhetesVendidos);
+		int posicaoSorteada = geradorAleatorio.nextInt(quantidadeBilhetesVendidos);
 		
 		Bilhete bilheteGanhador= bilhetesPreenchidos[posicaoSorteada];
 		
@@ -159,6 +170,7 @@ public class SistemaRifa {
 		
 		if (vendedor == null) {
 			System.out.println("Erro: Vendedor " + nomeVendedor + " não encontado");
+			return;
 		}
 		
 		String lista = "\n========== BILHETES POR VENDEDOR ==========\n";
