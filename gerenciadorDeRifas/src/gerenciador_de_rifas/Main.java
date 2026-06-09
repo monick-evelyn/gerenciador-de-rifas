@@ -12,7 +12,7 @@ public class Main {
 		System.out.println("| 2 - Cadastrar vendedor                       |");
 		System.out.println("| 3 - Realizar venda                           |");
 		System.out.println("| 4 - Buscar Vendedor por nome                 |");
-		System.out.println("| 5 - Buscar Comprador por nome                |");
+		System.out.println("| 5 - Listar bilhetes vendidos                 |");
 		System.out.println("| 6 - Visualizar números em grade              |");
 		System.out.println("| 7 - Mostrar relatório geral                  |");
 		System.out.println("| 8 - Mostrar Ranking de vendedores            |");
@@ -42,6 +42,14 @@ public class Main {
 	static void opcaoCadastrarVendedor(SistemaRifa sistema) {
 		if (sistema.totalVendedores < sistema.vendedores.length) {
 			String nomeVendedor=lerTexto("Digite o nome: ");
+			
+			for (int i = 0; i < sistema.totalVendedores; i++) {
+				if (sistema.vendedores[i].nome.equalsIgnoreCase(nomeVendedor)) {
+					System.out.println("Erro: O vendedor já existe.");
+					return;
+				}
+			}
+			
 			if (sistema.cadastrarVendedor(nomeVendedor)) {
 				System.out.println("Vendedor cadastrado com sucesso!");
 			} else {
@@ -61,13 +69,13 @@ public class Main {
 		return opcao;
 	}
 	
-	static void opcaoRealizarVenda(SistemaRifa sistema, Rifa rifa) {
-		if(rifa==null ) {
+	static void opcaoRealizarVenda(SistemaRifa sistema) {
+		if(sistema.rifa==null ) {
 			System.out.println("Erro: é necessário criar uma rifa primeiro!");
 			mostrarMenu();
 			return;
 		}
-		if(rifa.calcularQtdBilhetesDisponiveis()==0) {
+		if(sistema.rifa.calcularQtdBilhetesDisponiveis()==0) {
 			System.out.println("Erro: não existem bilhetes disponíveis!");
 			mostrarMenu();
 			return;
@@ -82,9 +90,9 @@ public class Main {
 		boolean bilheteInvalido=true;
 		
 		while(bilheteInvalido) {
-			if(numeroBilhete<1 || numeroBilhete> rifa.bilhetes.length) {
+			if(numeroBilhete<1 || numeroBilhete> sistema.rifa.bilhetes.length) {
 				numeroBilhete=lerInteiro("Erro: O bilhete já foi vendido ou não existe! Tente novamente: ");
-			}else if(rifa.verificarNumeroDisponivel(numeroBilhete)==false){
+			}else if(sistema.rifa.verificarNumeroDisponivel(numeroBilhete)==false){
 				numeroBilhete=lerInteiro("Erro: O bilhete já foi vendido ou não existe! Tente novamente: ");
 			}else {
 				bilheteInvalido=false;
@@ -103,9 +111,9 @@ public class Main {
 		String telefone=lerTexto("Digite o telefone: ");
 		
 		int opcaoPagamento = menuCadastrarFormaDePagamento();
-		String formaPagamento=rifa.cadastrarFormaDePagamento(opcaoPagamento);
+		String formaPagamento=sistema.rifa.cadastrarFormaDePagamento(opcaoPagamento);
 
-		sistema.realizarVenda(rifa, numeroBilhete, nomeComprador, telefone, formaPagamento, nomeVendedor);
+		sistema.realizarVenda(numeroBilhete, nomeComprador, telefone, formaPagamento, nomeVendedor);
 		
 		
 		System.out.println("Venda realizada com sucesso!");
@@ -124,20 +132,6 @@ public class Main {
 		
 		System.out.println(vendedorEncontrado.toString());
 		
-	}
-	
-	static void opcaoBuscarCompradorPorNome(SistemaRifa sistema, Rifa rifa) {
-		if(rifa==null ) {
-			System.out.println("Erro: é necessário criar uma rifa primeiro!");
-			return;
-		}
-		
-		String nomeComprador=lerTexto("Digite o nome do Comprador: ");
-		if(sistema.buscarCompradorPorNome(rifa, nomeComprador)==null) {
-			System.out.println("Erro: O comprador não foi encontrado!"); 
-			return;
-		}
-		System.out.println(sistema.buscarCompradorPorNome(rifa,nomeComprador));
 	}
 	
 	static void opcaoVisualizarNumerosEmGrade(SistemaRifa sistema) {
@@ -187,7 +181,7 @@ public class Main {
 		sistema.listarVendasPorVendedor(nomeVendedor);
 	}
 	
-	static void opcaoSortearNumeroRifa(SistemaRifa sistema,Rifa rifa) {
+	static void opcaoSortearNumeroRifa(SistemaRifa sistema) {
 		if(sistema.rifa==null ) {
 			System.out.println("Erro: é necessário criar uma rifa primeiro!");
 			return;
@@ -196,7 +190,7 @@ public class Main {
 			System.out.println("Erro: Não existe nenhum bilhete vendido para ser sorteado");
 			return;
 		}
-		System.out.println(sistema.sortearNumero(rifa));
+		System.out.println(sistema.sortearNumero());
 	}
 	
 	
@@ -247,6 +241,10 @@ public class Main {
 		return numero;
 	}
 	
+	static void listarVendas(SistemaRifa sistema) {
+		sistema.listarVendas();
+	}
+	
 	static SistemaRifa criarSistema(String opcao) {
 		while(!opcao.equalsIgnoreCase("S") && !opcao.equalsIgnoreCase("N")) {
 			opcao=lerTexto("ERRO: Opção inválida, por favor digite (S/N): ");
@@ -286,7 +284,7 @@ public class Main {
 						break;
 						
 					case 3:
-						opcaoRealizarVenda(sistema, sistema.rifa);
+						opcaoRealizarVenda(sistema);
 						break;
 					
 					case 4:
@@ -294,7 +292,7 @@ public class Main {
 						break;
 						
 					case 5:
-						opcaoBuscarCompradorPorNome(sistema, sistema.rifa);
+						listarVendas(sistema);
 						break;
 					
 					case 6:
@@ -313,7 +311,7 @@ public class Main {
 						opcaoListarVendasPorVendedor(sistema);
 						break;
 					case 10:
-						opcaoSortearNumeroRifa(sistema, sistema.rifa);
+						opcaoSortearNumeroRifa(sistema);
 						break;
 					
 					case 0:
