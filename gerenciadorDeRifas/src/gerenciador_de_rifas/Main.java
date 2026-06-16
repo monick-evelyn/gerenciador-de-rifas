@@ -184,7 +184,7 @@ public class Main {
 			System.out.println("Erro: Não existe nenhum bilhete vendido para ser sorteado");
 			return;
 		}
-		System.out.println(sistema.sortearNumero());
+		System.out.println(sistema.rifa.sortearNumero());
 	}
 	
 	

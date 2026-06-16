@@ -154,6 +154,45 @@ public class Rifa {
 		return bilhetesEmMatriz;
 	}
 	
+	String sortearNumero() {
+		int quantidadeBilhetesVendidos=0;
+		
+		for(int i=0; i<bilhetes.length;i++) {
+			if(bilhetes[i]!=null) {
+				quantidadeBilhetesVendidos++;
+			}
+		}
+		if (quantidadeBilhetesVendidos==0) {
+			return "Nenhum bilhete foi vendido ainda, não é possível sortear!";
+		}
+		Bilhete[] bilhetesPreenchidos=new Bilhete[quantidadeBilhetesVendidos];
+		
+		int contadorAux=0;
+		for(int i=0; i<bilhetes.length;i++) {
+			if(bilhetes[i]!=null) {
+				bilhetesPreenchidos[contadorAux] = bilhetes[i];
+				contadorAux++;
+			}
+		}
+		
+		java.util.Random geradorAleatorio = new java.util.Random();
+		
+		int posicaoSorteada = geradorAleatorio.nextInt(quantidadeBilhetesVendidos);
+		
+		Bilhete bilheteGanhador= bilhetesPreenchidos[posicaoSorteada];
+		
+		String resultado="";
+		resultado += "\n=================================================\n";
+	    resultado += "        NÚMERO SORTEADO COM SUCESSO!           \n";
+	    resultado += "=================================================\n";
+	    resultado += "Número do Bilhete: " + bilheteGanhador.numero;
+	    resultado += bilheteGanhador.comprador.toString() + "\n";
+	    resultado += "Vendedor responsável: " + bilheteGanhador.vendedor.nome+"\n";
+	    resultado += "=================================================\n";
+	    
+	    return resultado;
+	}
+	
 	public String toString() {
 		return "Rifa " +
 				"\nPrêmio: " + premio + 
