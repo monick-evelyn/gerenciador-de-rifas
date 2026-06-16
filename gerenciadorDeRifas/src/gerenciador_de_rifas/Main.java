@@ -146,7 +146,7 @@ public class Main {
 			return;
 		}
 		
-		sistema.listarRelatorioGeral();
+		sistema.rifa.listarRelatorioGeral();
 		
 	}
 	
