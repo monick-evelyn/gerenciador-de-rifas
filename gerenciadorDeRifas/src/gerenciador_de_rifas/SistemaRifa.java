@@ -39,28 +39,6 @@ public class SistemaRifa {
 		return null;
 	}
 	
-	
-	void listarVendas() {
-		
-		String lista = "\n========== BILHETES VENDIDOS ==========\n";
-		lista += "Bilhetes vendidos: "+ rifa.calcularQtdBilhetesVendidos() + "\n";
-		
-		boolean temBilhetes = false;
-		
-		for (int i = 0; i < rifa.bilhetes.length; i++) {
-			if (rifa.bilhetes[i] != null) {
-				temBilhetes = true;
-				lista += rifa.bilhetes[i].toString() + "\n";
-			}
-		}
-		
-		if (!temBilhetes) {
-			System.out.println("Não há bilhetes vendidos.");
-		}
-		
-		System.out.println(lista);
-	}
-	
 	void realizarVenda(int numeroBilhete, String nomeComprador, String telefone, String formaPagamento, String nomeVendedor) {
 		Vendedor vendedorAuxiliar=buscarVendedorPorNome(nomeVendedor);
 					
@@ -72,69 +50,6 @@ public class SistemaRifa {
 		}
 		
 		System.out.println(rifa.venderBilhete(numeroBilhete, novoComprador, vendedorAuxiliar, formaPagamento));
-	}
-	
-	String sortearNumero() {
-		int quantidadeBilhetesVendidos=0;
-		
-		for(int i=0; i<rifa.bilhetes.length;i++) {
-			if(rifa.bilhetes[i]!=null) {
-				quantidadeBilhetesVendidos++;
-			}
-		}
-		if (quantidadeBilhetesVendidos==0) {
-			return "Nenhum bilhete foi vendido ainda, não é possível sortear!";
-		}
-		Bilhete[] bilhetesPreenchidos=new Bilhete[quantidadeBilhetesVendidos];
-		
-		int contadorAux=0;
-		for(int i=0; i<rifa.bilhetes.length;i++) {
-			if(rifa.bilhetes[i]!=null) {
-				bilhetesPreenchidos[contadorAux] = rifa.bilhetes[i];
-				contadorAux++;
-			}
-		}
-		
-		java.util.Random geradorAleatorio = new java.util.Random();
-		
-		int posicaoSorteada = geradorAleatorio.nextInt(quantidadeBilhetesVendidos);
-		
-		Bilhete bilheteGanhador= bilhetesPreenchidos[posicaoSorteada];
-		
-		String resultado="";
-		resultado += "\n=================================================\n";
-	    resultado += "        NÚMERO SORTEADO COM SUCESSO!           \n";
-	    resultado += "=================================================\n";
-	    resultado += "Número do Bilhete: " + bilheteGanhador.numero;
-	    resultado += bilheteGanhador.comprador.toString() + "\n";
-	    resultado += "Vendedor responsável: " + bilheteGanhador.vendedor.nome+"\n";
-	    resultado += "=================================================\n";
-	    
-	    return resultado;
-		
-		
-	}
-	
-	void listarRelatorioGeral() {
-		System.out.println("\n==================== RELATÓRIO GERAL ====================");
-		
-		System.out.println(rifa.toString());
-		System.out.println("\nPROGRESSO: ==============================================");
-		System.out.printf("Meta de arrecadação: R$ %.2f%n",rifa.metaArrecadacao);
-		System.out.printf("Valor Arrecadado:    R$ %.2f%n",rifa.calcularValorArrecadado());
-		
-		System.out.println("\nBilhetes vendidos: " + rifa.calcularQtdBilhetesVendidos());
-		System.out.println("Bilhetes disponíveis: " + rifa.calcularQtdBilhetesDisponiveis());
-		
-		System.out.printf("\nProgresso: %.1f%%%n", rifa.calcularProgressoEmPorcentagem());
-		System.out.printf("Restante para meta: %.1f%%%n", rifa.calcularRestanteEmPorcentagem());
-		
-		System.out.println("\nEQUIPE: =================================================");
-		System.out.println("Total de Vendedores: " + totalVendedores);
-		
-		System.out.println(rifa.listarBilhetesEmMatriz());
-		
-		System.out.println("\n=========================================================");
 	}
 	
 	void carregarRankingDeVendedores() {

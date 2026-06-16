@@ -117,12 +117,12 @@ public class Rifa {
 		int controlador = 0;
 		
 		if(bilhetes.length<10) {
-			String bilhetesEmMatriz = "==================== VISUALIZAÇÃO GERAL DE BILHETES ====================\n";
+			String bilhetesEmMatriz = "========================= VISUALIZAÇÃO GERAL DE BILHETES =========================\n";
 			for(int i=0; i< bilhetes.length;i++) {
 				bilhetesEmMatriz+= " "+(controlador+1)+" ";
 				controlador++;
 			}
-			bilhetesEmMatriz += "========================================================================\n";
+			bilhetesEmMatriz += "\n==================================================================================\n";
 			return bilhetesEmMatriz;
 		}
 		
@@ -133,16 +133,20 @@ public class Rifa {
 			linhas++;
 		}
 		
-		String bilhetesEmMatriz = "==================== VISUALIZAÇÃO GERAL DE BILHETES ====================\n";
+		String bilhetesEmMatriz = "========================= VISUALIZAÇÃO GERAL DE BILHETES =========================\n";
 		
 		controlador = 0;
 		for (int i = 0; i < linhas; i++) {
 			for (int j = 0; j < colunas; j++) {
 				if(controlador<bilhetes.length) {
 					if (bilhetes[controlador] != null) {
-						bilhetesEmMatriz += "   X   ";
+						bilhetesEmMatriz += "    X   ";
 					} else {
-						bilhetesEmMatriz += "   " + (controlador+1) + "   ";
+						if ((controlador+1) < 10) {
+							bilhetesEmMatriz += "    " + (controlador+1) + "   ";
+						} else {
+							bilhetesEmMatriz += "   " + (controlador+1) + "   ";
+						}
 					}
 				}
 				
@@ -150,8 +154,86 @@ public class Rifa {
 			}
 			bilhetesEmMatriz += "\n";
 		}
-		bilhetesEmMatriz += "========================================================================\n";
+		bilhetesEmMatriz += "==================================================================================\n";
 		return bilhetesEmMatriz;
+	}
+	
+	void listarRelatorioGeral() {
+		System.out.println("\n============================== RELATÓRIO GERAL ==============================");
+		
+		System.out.println(toString());
+		System.out.println("\nPROGRESSO: ==================================================================");
+		System.out.printf("Meta de arrecadação: R$ %.2f%n",metaArrecadacao);
+		System.out.printf("Valor Arrecadado:    R$ %.2f%n",calcularValorArrecadado());
+		
+		System.out.println("\nBilhetes vendidos: " + calcularQtdBilhetesVendidos());
+		System.out.println("Bilhetes disponíveis: " + calcularQtdBilhetesDisponiveis());
+		
+		System.out.printf("\nProgresso: %.1f%%%n", calcularProgressoEmPorcentagem());
+		System.out.printf("Restante para meta: %.1f%%%n", calcularRestanteEmPorcentagem());
+		
+		System.out.println(listarBilhetesEmMatriz());
+		
+		System.out.println("===========================================================================");
+	}
+	
+void listarVendas() {
+		String lista = "\n========== BILHETES VENDIDOS ==========\n";
+		lista += "Bilhetes vendidos: "+ calcularQtdBilhetesVendidos() + "\n";
+		
+		boolean temBilhetes = false;
+		
+		for (int i = 0; i < bilhetes.length; i++) {
+			if (bilhetes[i] != null) {
+				temBilhetes = true;
+				lista += bilhetes[i].toString() + "\n";
+			}
+		}
+		
+		if (!temBilhetes) {
+			System.out.println("Não há bilhetes vendidos.");
+		}
+		
+		System.out.println(lista);
+	}
+	
+	String sortearNumero() {
+		int quantidadeBilhetesVendidos=0;
+		
+		for(int i=0; i<bilhetes.length;i++) {
+			if(bilhetes[i]!=null) {
+				quantidadeBilhetesVendidos++;
+			}
+		}
+		if (quantidadeBilhetesVendidos==0) {
+			return "Nenhum bilhete foi vendido ainda, não é possível sortear!";
+		}
+		Bilhete[] bilhetesPreenchidos=new Bilhete[quantidadeBilhetesVendidos];
+		
+		int contadorAux=0;
+		for(int i=0; i<bilhetes.length;i++) {
+			if(bilhetes[i]!=null) {
+				bilhetesPreenchidos[contadorAux] = bilhetes[i];
+				contadorAux++;
+			}
+		}
+		
+		java.util.Random geradorAleatorio = new java.util.Random();
+		
+		int posicaoSorteada = geradorAleatorio.nextInt(quantidadeBilhetesVendidos);
+		
+		Bilhete bilheteGanhador= bilhetesPreenchidos[posicaoSorteada];
+		
+		String resultado="";
+		resultado += "\n=================================================\n";
+	    resultado += "        NÚMERO SORTEADO COM SUCESSO!           \n";
+	    resultado += "=================================================\n";
+	    resultado += "Número do Bilhete: " + bilheteGanhador.numero;
+	    resultado += bilheteGanhador.comprador.toString() + "\n";
+	    resultado += "Vendedor responsável: " + bilheteGanhador.vendedor.nome+"\n";
+	    resultado += "=================================================\n";
+	    
+	    return resultado;
 	}
 	
 	public String toString() {

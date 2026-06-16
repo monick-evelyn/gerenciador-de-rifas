@@ -146,7 +146,7 @@ public class Main {
 			return;
 		}
 		
-		sistema.listarRelatorioGeral();
+		sistema.rifa.listarRelatorioGeral();
 		
 	}
 	
@@ -184,7 +184,7 @@ public class Main {
 			System.out.println("Erro: Não existe nenhum bilhete vendido para ser sorteado");
 			return;
 		}
-		System.out.println(sistema.sortearNumero());
+		System.out.println(sistema.rifa.sortearNumero());
 	}
 	
 	
@@ -236,7 +236,7 @@ public class Main {
 	}
 	
 	static void listarVendas(SistemaRifa sistema) {
-		sistema.listarVendas();
+		sistema.rifa.listarVendas();
 	}
 	
 	static SistemaRifa criarSistema(String opcao) {
@@ -256,6 +256,14 @@ public class Main {
 		}
 		
 		return null;
+	}
+	
+	static void sair() {
+		System.out.println("Saindo do sistema...");
+	}
+	
+	static void opcaoInvalida() {
+		System.out.println("Opção inválida!");
 	}
 	
 	public static void main(String[] args) {
@@ -309,11 +317,11 @@ public class Main {
 						break;
 					
 					case 0:
-						System.out.println("Saindo do sistema...");
+						sair();
 						break;
 						
 					default:
-						System.out.println("Opção inválida!");
+						opcaoInvalida();
 						break;
 				}
 			} while(opcaoEscolhaDoUsuario != 0);
