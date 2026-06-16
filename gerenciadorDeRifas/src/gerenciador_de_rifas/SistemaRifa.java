@@ -39,28 +39,6 @@ public class SistemaRifa {
 		return null;
 	}
 	
-	
-	void listarVendas() {
-		
-		String lista = "\n========== BILHETES VENDIDOS ==========\n";
-		lista += "Bilhetes vendidos: "+ rifa.calcularQtdBilhetesVendidos() + "\n";
-		
-		boolean temBilhetes = false;
-		
-		for (int i = 0; i < rifa.bilhetes.length; i++) {
-			if (rifa.bilhetes[i] != null) {
-				temBilhetes = true;
-				lista += rifa.bilhetes[i].toString() + "\n";
-			}
-		}
-		
-		if (!temBilhetes) {
-			System.out.println("Não há bilhetes vendidos.");
-		}
-		
-		System.out.println(lista);
-	}
-	
 	void realizarVenda(int numeroBilhete, String nomeComprador, String telefone, String formaPagamento, String nomeVendedor) {
 		Vendedor vendedorAuxiliar=buscarVendedorPorNome(nomeVendedor);
 					

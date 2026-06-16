@@ -236,7 +236,7 @@ public class Main {
 	}
 	
 	static void listarVendas(SistemaRifa sistema) {
-		sistema.listarVendas();
+		sistema.rifa.listarVendas();
 	}
 	
 	static SistemaRifa criarSistema(String opcao) {

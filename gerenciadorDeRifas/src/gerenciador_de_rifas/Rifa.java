@@ -177,6 +177,26 @@ public class Rifa {
 		System.out.println("===========================================================================");
 	}
 	
+void listarVendas() {
+		String lista = "\n========== BILHETES VENDIDOS ==========\n";
+		lista += "Bilhetes vendidos: "+ calcularQtdBilhetesVendidos() + "\n";
+		
+		boolean temBilhetes = false;
+		
+		for (int i = 0; i < bilhetes.length; i++) {
+			if (bilhetes[i] != null) {
+				temBilhetes = true;
+				lista += bilhetes[i].toString() + "\n";
+			}
+		}
+		
+		if (!temBilhetes) {
+			System.out.println("Não há bilhetes vendidos.");
+		}
+		
+		System.out.println(lista);
+	}
+	
 	String sortearNumero() {
 		int quantidadeBilhetesVendidos=0;
 		
