@@ -258,6 +258,14 @@ public class Main {
 		return null;
 	}
 	
+	static void sair() {
+		System.out.println("Saindo do sistema...");
+	}
+	
+	static void opcaoInvalida() {
+		System.out.println("Opção inválida!");
+	}
+	
 	public static void main(String[] args) {
 		String opcaoCadastrarSistema=lerTexto("Deseja cadastrar um sistema (S/N)? ");
 		
@@ -309,11 +317,11 @@ public class Main {
 						break;
 					
 					case 0:
-						System.out.println("Saindo do sistema...");
+						sair();
 						break;
 						
 					default:
-						System.out.println("Opção inválida!");
+						opcaoInvalida();
 						break;
 				}
 			} while(opcaoEscolhaDoUsuario != 0);
