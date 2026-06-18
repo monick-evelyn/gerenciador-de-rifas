@@ -15,8 +15,9 @@ public class Bilhete {
 	
 	public String toString() {
 		return "\nNúmero: " + numero + "\n"+
-				vendedor.toString() +
-				comprador.toString() +
+				"\nVendedor: " + vendedor.nome +
+				"\nComprador: " + comprador.nome +
+				"\nTelefone de Comprador: " + comprador.telefone +
 				"\nForma de pagamento: " + formaDePagamento;
 	}
 }
